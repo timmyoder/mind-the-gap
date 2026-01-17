@@ -1,4 +1,4 @@
-"""SQLite database setup and management for EPL terrain data."""
+"""SQLite database setup and management for Mind the Gap data."""
 
 import sqlite3
 from pathlib import Path
@@ -8,7 +8,7 @@ from typing import Optional
 class EPLDatabase:
     """Manages SQLite database for EPL match and standings data."""
 
-    def __init__(self, db_path: str = "data/epl_terrain.db"):
+    def __init__(self, db_path: str = "data/mind_the_gap.db"):
         """Initialize database connection.
         
         Args:
@@ -171,7 +171,7 @@ class EPLDatabase:
         self.close()
 
 
-def initialize_database(db_path: str = "data/epl_terrain.db") -> EPLDatabase:
+def initialize_database(db_path: str = "data/mind_the_gap.db") -> EPLDatabase:
     """Initialize database and create tables.
     
     Args:

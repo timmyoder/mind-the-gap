@@ -29,7 +29,7 @@ logging.basicConfig(
 logger = logging.getLogger(__name__)
 
 
-def run_full_pipeline(data_dir: str = "data/raw", db_path: str = "data/epl_terrain.db"):
+def run_full_pipeline(data_dir: str = "data/raw", db_path: str = "data/mind_the_gap.db"):
     """Execute complete data pipeline from CSV to populated database.
     
     Args:
@@ -37,7 +37,7 @@ def run_full_pipeline(data_dir: str = "data/raw", db_path: str = "data/epl_terra
         db_path: Path to SQLite database
     """
     logger.info("="*80)
-    logger.info("STARTING EPL TERRAIN DATA PIPELINE")
+    logger.info("STARTING MIND THE GAP DATA PIPELINE")
     logger.info("="*80)
     
     # Step 1: Initialize database

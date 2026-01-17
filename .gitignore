@@ -1,6 +1,6 @@
 .github
 data/raw/
-data/epl_terrain.db
+*.db
 scratch/
 
 # Byte-compiled / optimized / DLL files

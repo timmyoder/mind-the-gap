@@ -1,4 +1,4 @@
-# EPL Terrain 🏔️⚽
+# Mind the Gap 🚇⚽
 
 **Analyzing the biggest relegation escapes in Premier League history**
 
@@ -24,7 +24,7 @@ Wolves currently sit ~15 points from safety. If they survive, it would be unprec
 
 ```bash
 # Activate conda environment
-conda activate epl-terrain
+conda activate mind-the-gap
 
 # Install dependencies
 pip install -r requirements.txt
@@ -46,7 +46,7 @@ This downloads all available Premier League seasons (1993-2026) to `data/raw/`.
 python scripts/pipeline.py
 ```
 
-This creates `data/epl_terrain.db` with complete standings and gap calculations.
+This creates `data/mind_the_gap.db` with complete standings and gap calculations.
 
 ### 4. Validate Data
 
@@ -77,10 +77,10 @@ db.close()
 ## Project Structure
 
 ```
-epl-terrain/
+mind-the-gap/
 ├── data/
-│   ├── raw/              # CSV files from Football-Data.co.uk
-│   └── epl_terrain.db    # SQLite database (generated)
+│   ├── raw/              # CSVs from Football-Data.co.uk
+│   └── mind_the_gap.db   # SQLite database (generated)
 ├── src/
 │   ├── data/
 │   │   ├── db.py         # SQLite schema and connection
