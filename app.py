@@ -72,7 +72,7 @@ st.set_page_config(
 )
 
 # Database path
-DB_PATH = "data/epl_terrain.db"
+DB_PATH = "data/mind_the_gap.db"
 
 # Check if database exists
 if not Path(DB_PATH).exists():

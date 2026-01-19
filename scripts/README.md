@@ -37,10 +37,10 @@ python scripts/pipeline.py
 5. Creates daily standings snapshots (with forward-fill)
 6. Calculates relegation gaps for all teams
 7. Marks which teams survived vs. were relegated
-8. Inserts all data into `data/epl_terrain.db`
+8. Inserts all data into `data/mind_the_gap.db`
 
 **Output:**
-- SQLite database at `data/epl_terrain.db`
+- SQLite database at `data/mind_the_gap.db`
 - Summary statistics in console
 - Current Wolves situation vs. historical record
 
