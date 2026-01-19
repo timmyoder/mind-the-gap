@@ -1,6 +1,5 @@
 .github
 data/raw/
-*.db
 scratch/
 
 # Byte-compiled / optimized / DLL files
