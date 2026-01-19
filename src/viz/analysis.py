@@ -213,7 +213,7 @@ def get_biggest_escapes_by_season(
         normalized = (row['max_gap'] - min_gap) / gap_range
         opacity = 0.01 + 0.99 * (normalized ** 5)  # Exponential curve
         
-        # Add line for this season - all black with varying opacity
+        # Add line for this season - use blue color with varying opacity for visibility in dark mode
         fig.add_trace(go.Scatter(
             x=trajectory['days_into_season'],
             y=trajectory['gap_display'],
@@ -227,7 +227,7 @@ def get_biggest_escapes_by_season(
                 "<extra></extra>"
             ),
             line=dict(
-                color=f'rgba(0, 0, 0, {opacity})',
+                color=f'rgba(17, 138, 178, {opacity})',  # Blue color instead of black
                 width=2
             ),
             showlegend=True
