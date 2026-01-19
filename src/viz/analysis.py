@@ -11,7 +11,7 @@ def get_survived_gaps_histogram(
     conn: sqlite3.Connection,
     season_start: Optional[str] = None,
     season_end: Optional[str] = None
-) -> go.Figure:
+) -> tuple[go.Figure, dict]:
     """Create histogram of maximum gaps overcome by teams that survived.
     
     Args:
@@ -20,7 +20,7 @@ def get_survived_gaps_histogram(
         season_end: Optional season filter
         
     Returns:
-        Plotly Figure with histogram
+        Tuple of (Plotly Figure with histogram, dict with statistics)
     """
     # Query to get maximum gap for each team that survived
     # Database stores positive = danger, we'll negate for display
@@ -69,10 +69,17 @@ def get_survived_gaps_histogram(
         hovertemplate='<b>Gap overcome: %{x} points</b><br>Teams: %{y}<extra></extra>'
     ))
     
-    # Add summary statistics as annotations
+    # Add summary statistics
     mean_gap = df['gap_overcome'].mean()
     median_gap = df['gap_overcome'].median()
     max_gap = df['gap_overcome'].max()
+    
+    stats = {
+        'mean': mean_gap,
+        'median': median_gap,
+        'max': max_gap,
+        'count': len(df)
+    }
     
     fig.update_layout(
         title=dict(
@@ -84,25 +91,10 @@ def get_survived_gaps_histogram(
         yaxis_title="Number of Teams",
         bargap=0.05,
         showlegend=False,
-        hovermode='x',
-        annotations=[
-            dict(
-                x=0.98, y=0.98,
-                xref='paper', yref='paper',
-                text=f"Mean: {mean_gap:.1f} pts<br>Median: {median_gap:.1f} pts<br>Max: {max_gap:.0f} pts",
-                showarrow=False,
-                bgcolor='rgba(255,255,255,0.8)',
-                bordercolor='#2E86AB',
-                borderwidth=2,
-                font=dict(size=12),
-                align='left',
-                xanchor='right',
-                yanchor='top'
-            )
-        ]
+        hovermode='x'
     )
     
-    return fig
+    return fig, stats
 
 
 def get_biggest_escapes_by_season(
@@ -208,10 +200,10 @@ def get_biggest_escapes_by_season(
         trajectory['gap_display'] = -trajectory['gap_to_17th']
         
         # Calculate opacity: bigger gaps = more opaque (darker)
-        # Use exponential scaling (power of 5) for extremely dramatic difference
-        # Small gaps (1-5 pts) will be nearly invisible, big gaps very dark
+        # Use exponential scaling (power of 3) for dramatic but visible difference
+        # Small gaps (1-5 pts) will be more visible than power 5, big gaps still dark
         normalized = (row['max_gap'] - min_gap) / gap_range
-        opacity = 0.01 + 0.99 * (normalized ** 5)  # Exponential curve
+        opacity = 0.01 + 0.99 * (normalized ** 3)  # Exponential curve
         
         # Add line for this season - use blue color with varying opacity for visibility in dark mode
         fig.add_trace(go.Scatter(
@@ -968,7 +960,7 @@ def get_ppg_survival_heatmap(
         text=[f"{pct:.0f}%<br>({count} teams)" for pct, count in zip(survival_by_ppg['survival_pct'], survival_by_ppg['count'])],
         textposition='outside',
         hovertemplate=(
-            "Required PPG: %{x}<br>"
+            "Gap closure rate: %{x}<br>"
             "Survival rate: %{y:.1f}%<br>"
             "Sample size: %{customdata}<br>"
             "<extra></extra>"
@@ -1013,11 +1005,11 @@ def get_ppg_survival_heatmap(
     
     fig.update_layout(
         title=dict(
-            text="Survival Probability by Required PPG<br><sub>What % of teams survived needing each form level?</sub>",
+            text="Survival Probability by Gap Closure Rate<br><sub>What % of teams survived needing each PPG advantage over 17th place?</sub>",
             x=0.5,
             xanchor='center'
         ),
-        xaxis_title="Required Points Per Game",
+        xaxis_title="Gap Closure Rate (PPG advantage over 17th)",
         yaxis_title="Survival Rate (%)",
         yaxis=dict(range=[0, 105]),
         showlegend=False,
@@ -1128,7 +1120,7 @@ def get_points_per_game_required(
             ),
             hovertemplate=(
                 "<b>%{customdata[0]}: %{customdata[1]}</b><br>"
-                "Required PPG: %{y:.2f}<br>"
+                "Gap closure rate: %{y:.2f} PPG<br>"
                 "Games remaining: %{x}<br>"
                 "Gap: %{customdata[2]:.0f} points<br>"
                 "Outcome: RELEGATED<br>"
@@ -1150,7 +1142,7 @@ def get_points_per_game_required(
             ),
             hovertemplate=(
                 "<b>%{customdata[0]}: %{customdata[1]}</b><br>"
-                "Required PPG: %{y:.2f}<br>"
+                "Gap closure rate: %{y:.2f} PPG<br>"
                 "Games remaining: %{x}<br>"
                 "Gap: %{customdata[2]:.0f} points<br>"
                 "Outcome: SURVIVED<br>"
@@ -1206,7 +1198,7 @@ def get_points_per_game_required(
                 ),
                 hovertemplate=(
                     f"<b>Wolves 2025-26</b><br>"
-                    f"Required PPG: {wolves_df['required_ppg'].iloc[0]:.2f}<br>"
+                    f"Gap closure rate: {wolves_df['required_ppg'].iloc[0]:.2f} PPG<br>"
                     f"Games remaining: {wolves_df['games_remaining'].iloc[0]}<br>"
                     f"Gap: {wolves_df['gap_to_17th'].iloc[0]:.0f} points<br>"
                     "<extra></extra>"
@@ -1217,12 +1209,12 @@ def get_points_per_game_required(
     
     fig.update_layout(
         title=dict(
-            text="Required Points Per Game to Reach Safety<br><sub>What form is needed to survive?</sub>",
+            text="Gap Closure Rate to Reach Safety<br><sub>PPG advantage over 17th place needed from different positions</sub>",
             x=0.5,
             xanchor='center'
         ),
         xaxis_title="Games Remaining",
-        yaxis_title="Required Points Per Game",
+        yaxis_title="Gap Closure Rate (PPG advantage)",
         xaxis=dict(autorange='reversed'),
         yaxis=dict(range=[0, 3]),
         showlegend=True

@@ -15,8 +15,8 @@ def render_trends_tab(db_path: str, season_start: str, season_end: str):
     """
     st.subheader("📈 Comeback Trajectories by Season")
     st.markdown("""
-    Follow the journey of the team with the biggest successful escape in each season. 
-    Watch how they climbed from danger back to safety.
+    Track the biggest successful escape from each season. Lines show how teams climbed 
+    from their worst position back to safety. Darker lines represent more severe gaps overcome.
     """)
     
     # Legend toggle

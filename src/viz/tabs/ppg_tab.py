@@ -13,12 +13,13 @@ def render_ppg_tab(db_path: str, season_start: str, season_end: str):
         season_start: Start season filter
         season_end: End season filter
     """
-    st.subheader("⚡ Required Points Per Game to Reach Safety")
+    st.subheader("⚡ Gap Closure Rate to Reach Safety")
     st.markdown("""
-    What form is needed to survive from different positions?
+    How much faster must you earn points than 17th place to survive?
     
-    This shows the points-per-game rate required to overcome the gap (assuming need to 
-    reach 3 points above 17th place for safety).
+    This shows the **gap closure rate** - the PPG advantage over 17th place needed to overcome 
+    the deficit. For example, 0.82 PPG means you must earn 0.82 points per game MORE than 17th 
+    place to close the gap before the season ends.
     """)
     
     with st.spinner("Calculating required form..."):
@@ -29,14 +30,17 @@ def render_ppg_tab(db_path: str, season_start: str, season_end: str):
             conn.close()
             
             st.markdown("""
-            **💡 Reference Rates:**
-            - **1.0 PPG** = Drawing every game (unlikely to survive from large gap)
-            - **1.5 PPG** = Good form (roughly 1 win + 1 draw per 2 games)
-            - **2.0 PPG** = Title-winning form (2 wins per 3 games)
-            - **>2.5 PPG** = Historically very rare, almost impossible to sustain
+            **💡 Interpreting Gap Closure Rates:**
+            - **0.5 PPG advantage** = Earn 0.5 more per game than 17th (e.g., you get 1.5, they get 1.0)
+            - **1.0 PPG advantage** = Earn 1 point more per game (difficult to sustain)
+            - **1.5 PPG advantage** = Earn 1.5 more per game (requires excellent form while 17th struggles)
+            - **>2.0 PPG advantage** = Historically very rare, almost impossible
             
-            **Blue dots** show teams that survived despite the required rate.
-            **Red dots** show teams that needed that rate but were relegated anyway.
+            **Note:** This assumes 17th place continues their current form. If they collapse, your 
+            required advantage decreases. If they improve, you need even better form.
+            
+            **Blue dots** show teams that achieved the needed advantage and survived.
+            **Red dots** show teams that couldn't maintain the advantage and were relegated.
             """)
             
         except Exception as e:

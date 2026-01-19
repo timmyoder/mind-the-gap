@@ -52,9 +52,9 @@ def render_heatmap_tab(db_path: str, season_start: str, season_end: str):
     
     else:  # ppg view
         st.markdown("""
-        What percentage of teams survived when requiring each PPG rate?
+        What percentage of teams survived when needing each gap closure rate?
         
-        Shows survival probability based on the points-per-game form needed to reach safety.
+        Shows survival probability based on the PPG advantage over 17th place required to close the gap.
         """)
         
         with st.spinner("Calculating PPG-based survival probabilities..."):
@@ -66,17 +66,19 @@ def render_heatmap_tab(db_path: str, season_start: str, season_end: str):
                 
                 st.markdown("""
                 **💡 How to Read:**
-                - **Green zones** = High survival rate when needing that PPG
-                - **Red zones** = Low survival rate (difficult PPG requirement)
-                - **Y-axis bins**: PPG ranges (e.g., 1.5-2.0 = need 1.5 to 2.0 points per game)
-                - Empty cells = Not enough historical data
+                - **Green bars** = High survival rate at that gap closure rate
+                - **Red bars** = Low survival rate (very difficult advantage to maintain)
+                - **X-axis**: Gap closure rate in PPG (how much faster you must earn points than 17th)
+                - Sample size shown on each bar
                 - ⭐ Wolves' current position shown (if in 2025-26 season)
                 
-                **Reference:**
-                - <1.0 PPG = Very easy (drawing/losing most games still survives)
-                - 1.0-1.5 PPG = Achievable (mix of wins and draws)
-                - 1.5-2.0 PPG = Challenging (need good form)
-                - >2.0 PPG = Very difficult (title-winning pace)
+                **Interpreting the rates:**
+                - <0.5 PPG advantage = Relatively easy (slight outperformance needed)
+                - 0.5-1.0 PPG advantage = Moderate (steady good form while 17th is average)
+                - 1.0-1.5 PPG advantage = Challenging (excellent form while 17th struggles)
+                - >1.5 PPG advantage = Very difficult (requires sustained excellence AND 17th collapse)
+                
+                **Remember:** This is PPG MORE than 17th place, not your absolute PPG.
                 """)
                 
             except Exception as e:

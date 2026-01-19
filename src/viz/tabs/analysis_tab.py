@@ -29,8 +29,11 @@ def render_analysis_tab(db_path: str, season_start: str, season_end: str):
     with st.spinner("Analyzing survived gaps..."):
         try:
             conn = sqlite3.connect(db_path)
-            histogram_fig = get_survived_gaps_histogram(conn, season_start, season_end)
+            histogram_fig, stats = get_survived_gaps_histogram(conn, season_start, season_end)
             st.plotly_chart(histogram_fig, width='stretch', key='analysis_histogram')
+            
+            # Display statistics below the figure
+            st.markdown(f"**Statistics:** Mean: {stats['mean']:.1f} pts | Median: {stats['median']:.1f} pts | Max: {stats['max']:.0f} pts")
             
             # Show top escapes table
             st.markdown("### Top 10 Biggest Escapes")
