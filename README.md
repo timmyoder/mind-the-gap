@@ -1,8 +1,12 @@
-# Mind the Gap 🚇⚽
+# Mind the Gap 🚇⚽🐺
 
 **Analyzing the biggest relegation escapes in Premier League history**
 
 Calculate and visualize points gaps from relegation across all PL seasons (1992-present). Built to answer: *Can Wolves survive a historic 15-point deficit in 2025/26?*
+
+Live App: https://mind-the-gap-wolves.streamlit.app/
+
+⚠️ Disclaimer: This whole thing was vibe coded. Don't judge me. 
 
 ## Project Motivation
 
