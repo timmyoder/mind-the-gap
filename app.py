@@ -1,4 +1,4 @@
-"""Streamlit app for Mind the Gap: Premier League Relegation Visualization."""
+"""Streamlit app for Mind the Gap: Premier League Relegation Analysis."""
 
 import streamlit as st
 import sqlite3
@@ -72,7 +72,7 @@ TAB_CONFIG = {
 
 # Page configuration
 st.set_page_config(
-    page_title="Mind the Gap - EPL Relegation Terrain",
+    page_title="Mind the Gap - EPL Relegation Analysis",
     page_icon="⚽",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -91,10 +91,10 @@ def main():
     """Main Streamlit application."""
     
     # Title and description
-    st.title("⚽ Mind the Gap: Premier League Relegation Terrain")
+    st.title("⚽ Mind the Gap: Premier League Relegation Analysis")
     st.markdown("""
-    Explore the landscape of Premier League relegation battles across all seasons.
-    Teams climb out of danger or sink deeper - visualize every escape and every demise.
+    Explore the history of Premier League relegation battles. Track comeback trajectories, 
+    analyze survival patterns, and see if Wolves can achieve the unprecedented.
     """)
     
     # Sidebar controls

@@ -57,9 +57,9 @@ def render_trends_tab(db_path: str, season_start: str, season_end: str):
                 st.markdown("""
                 **📊 Insights:**
                 - Orange line = safety threshold (17th place)
-                - Dark black lines = biggest historical escapes
-                - Light gray lines = minor dips into danger
-                - Red line = current season (if applicable)
+                - Dark blue lines = biggest historical escapes
+                - Light blue lines = minor dips into danger
+                - Red line = Wolves 2025-26 current season
                 """)
             
         except Exception as e:
