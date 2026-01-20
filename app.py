@@ -149,7 +149,7 @@ def main():
     **Selected**: {season_start} to {season_end}
     """)
     
-    # CSS to make tabs larger and more visible, and constrain Plotly charts for mobile
+    # CSS to make tabs larger and more visible
     st.markdown("""
     <style>
     .stTabs [data-baseweb="tab-list"] {
@@ -161,12 +161,6 @@ def main():
         padding-right: 20px;
         font-size: 18px;
         font-weight: 600;
-    }
-    /* Constrain Plotly chart width to 80% with 10% margins for better mobile scrolling */
-    div[data-testid="stPlotlyChart"] {
-        max-width: 80%;
-        margin-left: auto;
-        margin-right: auto;
     }
     </style>
     """, unsafe_allow_html=True)

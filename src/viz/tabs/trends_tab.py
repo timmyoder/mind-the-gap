@@ -30,7 +30,11 @@ def render_trends_tab(db_path: str, season_start: str, season_end: str):
         try:
             conn = sqlite3.connect(db_path)
             trajectories_fig = get_biggest_escapes_by_season(conn, season_start, season_end, show_legend=show_legend)
-            st.plotly_chart(trajectories_fig, width='stretch', key='trends_trajectory')
+            
+            # Use columns for 10% margins on each side (better mobile scrolling)
+            col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+            with col2:
+                st.plotly_chart(trajectories_fig, width='stretch', key='trends_trajectory')
             
             # Always-visible legend for current season
             st.markdown("""

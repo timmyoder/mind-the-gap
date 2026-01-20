@@ -35,7 +35,12 @@ def render_heatmap_tab(db_path: str, season_start: str, season_end: str):
             try:
                 conn = sqlite3.connect(db_path)
                 heatmap_fig = get_survival_probability_heatmap(conn, season_start, season_end)
-                st.plotly_chart(heatmap_fig, width='stretch', key='survival_heatmap')
+                
+                # Use columns for 10% margins on each side (better mobile scrolling)
+                col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+                with col2:
+                    st.plotly_chart(heatmap_fig, width='stretch', key='survival_heatmap')
+                
                 conn.close()
                 
                 st.markdown("""
@@ -61,7 +66,12 @@ def render_heatmap_tab(db_path: str, season_start: str, season_end: str):
             try:
                 conn = sqlite3.connect(db_path)
                 heatmap_fig = get_ppg_survival_heatmap(conn, season_start, season_end)
-                st.plotly_chart(heatmap_fig, width='stretch', key='ppg_heatmap')
+                
+                # Use columns for 10% margins on each side (better mobile scrolling)
+                col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+                with col2:
+                    st.plotly_chart(heatmap_fig, width='stretch', key='ppg_heatmap')
+                
                 conn.close()
                 
                 st.markdown("""

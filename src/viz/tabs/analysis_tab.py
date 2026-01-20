@@ -30,7 +30,11 @@ def render_analysis_tab(db_path: str, season_start: str, season_end: str):
         try:
             conn = sqlite3.connect(db_path)
             histogram_fig, stats = get_survived_gaps_histogram(conn, season_start, season_end)
-            st.plotly_chart(histogram_fig, width='stretch', key='analysis_histogram')
+            
+            # Use columns for 10% margins on each side (better mobile scrolling)
+            col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+            with col2:
+                st.plotly_chart(histogram_fig, width='stretch', key='analysis_histogram')
             
             # Display statistics below the figure
             st.markdown(f"**Statistics:** Mean: {stats['mean']:.1f} pts | Median: {stats['median']:.1f} pts | Max: {stats['max']:.0f} pts")

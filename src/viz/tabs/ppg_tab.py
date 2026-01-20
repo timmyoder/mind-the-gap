@@ -26,7 +26,12 @@ def render_ppg_tab(db_path: str, season_start: str, season_end: str):
         try:
             conn = sqlite3.connect(db_path)
             ppg_fig = get_points_per_game_required(conn, season_start, season_end)
-            st.plotly_chart(ppg_fig, width='stretch', key='ppg_required')
+            
+            # Use columns for 10% margins on each side (better mobile scrolling)
+            col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+            with col2:
+                st.plotly_chart(ppg_fig, width='stretch', key='ppg_required')
+            
             conn.close()
             
             st.markdown("""

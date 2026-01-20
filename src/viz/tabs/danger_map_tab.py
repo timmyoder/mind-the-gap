@@ -25,7 +25,12 @@ def render_danger_map_tab(db_path: str, season_start: str, season_end: str):
         try:
             conn = sqlite3.connect(db_path)
             danger_map_fig = get_danger_map_scatter(conn, season_start, season_end)
-            st.plotly_chart(danger_map_fig, width='stretch', key='danger_map')
+            
+            # Use columns for 10% margins on each side (better mobile scrolling)
+            col1, col2, col3 = st.columns([0.1, 0.8, 0.1])
+            with col2:
+                st.plotly_chart(danger_map_fig, width='stretch', key='danger_map')
+            
             conn.close()
             
             st.markdown("""
