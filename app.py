@@ -12,6 +12,7 @@ from src.viz.tabs.terrain_tab import render_terrain_tab
 from src.viz.tabs.danger_map_tab import render_danger_map_tab
 from src.viz.tabs.heatmap_tab import render_heatmap_tab
 from src.viz.tabs.ppg_tab import render_ppg_tab
+from src.viz.tabs.methodology_tab import render_methodology_tab
 
 
 # ============================================================================
@@ -57,6 +58,12 @@ TAB_CONFIG = {
         'icon': '⚡',
         'title': 'Required PPG',
         'render_func': render_ppg_tab
+    },
+    'methodology': {
+        'enabled': True,
+        'icon': '📚',
+        'title': 'Methodology',
+        'render_func': render_methodology_tab
     }
 }
 
@@ -68,7 +75,7 @@ st.set_page_config(
     page_title="Mind the Gap - EPL Relegation Terrain",
     page_icon="⚽",
     layout="wide",
-    initial_sidebar_state="expanded"
+    initial_sidebar_state="collapsed"
 )
 
 # Database path
@@ -142,7 +149,7 @@ def main():
     **Selected**: {season_start} to {season_end}
     """)
     
-    # CSS to make tabs larger and more visible
+    # CSS to make tabs larger and more visible, and constrain Plotly charts for mobile
     st.markdown("""
     <style>
     .stTabs [data-baseweb="tab-list"] {
@@ -154,6 +161,12 @@ def main():
         padding-right: 20px;
         font-size: 18px;
         font-weight: 600;
+    }
+    /* Constrain Plotly chart width to 80% with 10% margins for better mobile scrolling */
+    div[data-testid="stPlotlyChart"] {
+        max-width: 80%;
+        margin-left: auto;
+        margin-right: auto;
     }
     </style>
     """, unsafe_allow_html=True)

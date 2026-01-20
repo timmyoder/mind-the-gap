@@ -31,6 +31,14 @@ def render_trends_tab(db_path: str, season_start: str, season_end: str):
             conn = sqlite3.connect(db_path)
             trajectories_fig = get_biggest_escapes_by_season(conn, season_start, season_end, show_legend=show_legend)
             st.plotly_chart(trajectories_fig, width='stretch', key='trends_trajectory')
+            
+            # Always-visible legend for current season
+            st.markdown("""
+            <div style="background-color: rgba(255, 0, 0, 0.1); border-left: 4px solid red; padding: 10px; margin-top: 10px; margin-bottom: 15px;">
+                <strong>🔴 Red Line:</strong> Wolves 2025-26 current season trajectory
+            </div>
+            """, unsafe_allow_html=True)
+            
             conn.close()
             
             # Insights
